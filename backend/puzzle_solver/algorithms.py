@@ -26,24 +26,31 @@ class Algorithm:
     def get_steps(self):
         raise NotImplementedError("Ova funkcija mora biti implementirana u podklasi.")
 
+
 class BFS(Algorithm):
     def __init__(self, initial_state, goal_state):
         super().__init__(initial_state, goal_state)
 
     def get_steps(self):
         visited = set()
-        queue = deque([(self.initial_state, [])])  # (current_state, path)
+        queue = deque([(self.initial_state, [])])  # (trenutno stanje, putanja)
+
+        visited.add(tuple(self.initial_state))  # Dodaj početno stanje odmah
+
         while queue:
             state, path = queue.popleft()
+            
             if state == self.goal_state:
                 return path
-            visited.add(tuple(state))
 
-            # Get possible moves (valid neighbors)
+            # Generiši susedna stanja
             for next_state, move in self.get_neighbors(state):
-                if tuple(next_state) not in visited:
+                next_tuple = tuple(next_state)
+                if next_tuple not in visited:
+                    visited.add(next_tuple)  # Dodaj u posećene odmah da sprečiš duplikate
                     queue.append((next_state, path + [move]))
-        return None
+
+        return None 
 
     def get_neighbors(self, state):
         # Define how tiles can move and return the valid neighbors and moves
@@ -62,6 +69,7 @@ class BFS(Algorithm):
                 new_state[empty_index], new_state[new_index] = new_state[new_index], new_state[empty_index]
                 neighbors.append((new_state, new_index))
         return neighbors
+
 
 class BestFS(Algorithm):
     def __init__(self, initial_state, goal_state, heuristic):
