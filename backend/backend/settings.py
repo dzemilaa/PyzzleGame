@@ -14,8 +14,8 @@ SECRET_KEY = 'django-insecure-cih4=*x19(b373$^^w&m1_c3%f!u%&fl#48&92&hv)2%!22j_b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['pyzzlebackend.onrender.com']
-CSRF_TRUSTED_ORIGINS = ['https://pyzzlebackend.onrender.com']
+ALLOWED_HOSTS = ['puzzlebackend-on82.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://puzzlebackend-on82.onrender.com']
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
