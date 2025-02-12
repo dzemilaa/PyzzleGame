@@ -1,0 +1,408 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Press Start 2P', cursive;
+    font-size: 20px;
+    text-align: center;
+    color: #df789d;
+    background-color: #111111f8;
+    border: var(--clr-one) 0.125em solid;
+    box-shadow: inset 0 0 0.5em 0 var(--clr-one), 0 0 0.5em 0 var(--clr-one);
+}
+.container {
+ margin-top: 52px;
+ margin-bottom: 100px;
+}
+
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    grid-template-rows: repeat(3, 150px);
+    border: #0ff 0.125em solid;
+    box-shadow: inset 0 0 0.5em 0 #0ff, 0 0 0.5em 0 #0ff;
+    gap: 2px;
+    margin-left: 300px;
+    width: 456px;
+    border: 3px solid #0ff;
+}
+#game-board::after {
+  content: "";
+  position: absolute;
+  background-image: url('./images/puzzle.png');
+  background-size: cover; 
+  background-position: center;
+  width: 456px;
+  height: 456px;
+  opacity: 0.2; 
+  z-index: -1; 
+}
+
+.left{
+    display: flex;
+    flex-direction: column;
+    float: left;
+}
+.left p{
+  font-size: 15px;
+  margin-left: 50px;
+}
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  
+}
+
+.neon-label {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  font-family: 'Press Start 2P', cursive; /* Retro font (Google Fonts) */
+  color: #0ff; /* Neon cyan boja */
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  position: relative;
+}
+
+.neon-label:hover {
+  text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
+}
+
+.neon-label input {
+  display: none; /* Sakriva standardni radio button */
+}
+
+.neon-label span {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Stilizacija kružića */
+.neon-label span::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border: 2px solid #0ff;
+  border-radius: 50%;
+  margin-right: 10px;
+  transition: 0.3s ease-in-out;
+  box-shadow: 0 0 5px #0ff;
+  background: transparent;
+}
+
+/* Kada je radio button selektovan, promeni boju kružića */
+.neon-label input:checked + span::before {
+  background: #0ff;
+  box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+}
+
+/* Efekat treperenja kada je selektovan */
+@keyframes neonGlow {
+  0% { text-shadow: 0 0 5px #0ff, 0 0 10px #0ff; }
+  50% { text-shadow: 0 0 10px #0ff, 0 0 20px #0ff; }
+  100% { text-shadow: 0 0 5px #0ff, 0 0 10px #0ff; }
+}
+
+/* Kada je radio button selektovan, animacija za labelu */
+.neon-label input:checked + span {
+  animation: neonGlow 1s infinite alternate;
+}
+
+
+.tile {
+    width: 150px;
+    height: 150px;
+    background-size: 450px 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid #000;
+    font-family: 'Press Start 2P', cursive; /* Retro font (Google Fonts) */
+    color: #0ff; /* Neon cyan boja */
+    transition: transform 0.2s ease-in-out;
+    position: relative;
+}
+
+
+
+#message {
+    font-size: 20px;
+    color: #0ff;
+    font-weight: bold;
+}
+
+
+:root {
+  --clr-one: #df789d;
+  --clr-bg: #1d1e22;
+}
+
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-right: 200px;
+  gap: 20px;
+}
+
+.neon-button {
+  width: 80%;
+  font-size: 1rem;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0.5em 1em;
+  border-radius: 0.25em;
+  position: relative;
+  
+}
+
+.neon-button__1 {
+  color: var(--clr-one);
+  border: var(--clr-one) 0.125em solid;
+  text-shadow: 0 0 0.105em hsl(0 0% 100% / 0.3), 0 0 0.45em --clr-one;
+  box-shadow: inset 0 0 0.5em 0 var(--clr-one), 0 0 0.5em 0 var(--clr-one);
+}
+
+
+
+.neon-button.active::before {
+  animation: scalingShadow 0.5s ease-in-out;
+}
+
+@keyframes scalingShadow {
+  0% {
+    top: 120%;
+    transform: perspective(1.5em) rotateX(45deg) scale(0.8, 0.3);
+  }
+  50% {
+    top: 165%;
+    transform: perspective(1.5em) rotateX(45deg) scale(0.75, 0.3);
+  }
+  100% {
+    top: 120%;
+    transform: perspective(1.5em) rotateX(45deg) scale(0.8, 0.3);
+  }
+}
+
+.neon-button__1::before {
+  background: var(--clr-one);
+}
+
+.neon-button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 100ms linear;
+}
+
+.neon-button__1::after {
+  box-shadow: 0 0 2em 0.5em var(--clr-one);
+  background-color: var(--clr-one);
+}
+
+
+.neon-button:hover::before,
+.neon-button:focus::before {
+  opacity: 1;
+}
+
+.neon-button:hover::after,
+.neon-button:focus::after {
+  opacity: 1;
+}
+
+.neon-button:hover,
+.neon-button:focus {
+  outline: none;
+  color: var(--clr-bg);
+  text-shadow: none;
+}
+
+.active {
+  animation: animate 0.5s ease-in-out;
+}
+
+@keyframes animate {
+  0% {
+    transform: translateY(0%);
+  }
+  50% {
+    transform: translateY(-40%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@media (max-width: 1200px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #game-board {
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    width: 306px;
+    margin: 0px;
+  }
+  #game-board::after {
+    content: "";
+    position: absolute;
+    background-image: url('./images/puzzle.png');
+    background-size: cover; 
+    background-position: center;
+    width: 306px;
+    height: 306px;
+    opacity: 0.2; 
+    z-index: -1; 
+  }
+  .instructions {
+    display: none;
+     }
+  .tile {
+    width: 100px;
+    height: 100px;
+    font-size: 18px;
+  }
+.right{
+  margin-top: 20px;
+}
+  .neon-label {
+    font-size: 16px;
+  }
+  .buttons {
+    width: 100%;
+  }
+}
+
+/* Mobilni telefoni */
+@media (max-width: 480px) {
+  body {
+    font-size: 10px;
+    height: 100%;
+
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+  }
+
+  #game-board {
+    grid-template-columns: repeat(3, 80px);
+    grid-template-rows: repeat(3, 80px);
+    width: 246px;
+    margin: 10px;
+  }
+  #game-board::after {
+    content: "";
+    position: absolute;
+    background-image: url('./images/puzzle.png');
+    background-size: cover; 
+    background-position: center;
+    width: 246px;
+    height: 246px;
+    opacity: 0.2; 
+    z-index: -1; 
+  }
+  .instructions {
+ display: none;
+  }
+  .left p{
+    font-size: 10px;
+    margin: 0;
+    margin-bottom: 30px;
+  }
+  .tile {
+    width: 80px;
+    height: 80px;
+    font-size: 14px;
+  }
+  .neon-label {
+    font-size: 8px;
+  }
+.right {   
+  gap: 0;
+   margin-bottom: 20px;
+  }
+  .buttons {
+    width: 100%;
+    margin-top: 50px;
+  }
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background-color: #df789d;
+  color: #0ff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.modal-content p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.modal-content button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #0ff;
+  color: #df789d;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out; /* Dodajemo tranziciju za glatke efekte */
+}
+
+.modal-content button:hover {
+  background-color: #00e6e6; /* Malo tamnija nijansa */
+  color: white; /* Promena boje teksta */
+  box-shadow: 0 0 15px rgba(0, 255, 255, 1); /* Povećan sjaj */
+  transform: scale(1.05); /* Blago povećanje */
+}
+
+.modal-content button:active {
+  background-color: #00cccc; /* Još tamnija nijansa pri kliku */
+  transform: scale(0.95); /* Blago smanjenje da izgleda pritisnuto */
+}
+.instructions {
+  color: #0ff;
+  font-family: "Press Start 2P", cursive;
+  font-size: 13px;
+  text-align: center;
+    white-space: pre;
+}
+.key {
+  color: #df789d; /* Žuta boja za tastere */
+  font-weight: bold;
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pyzzle</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <h1>Pyzzle - Puzzle game</h1>
+    <pre class="instructions">
+<span class="key">SPACE</span> – Start/Pause    <span class="key">ESC</span>  – Stop    <span class="key">ENTER</span> – Solve 
+        </pre>
+        
+    
+    <div class="container">
+
+        <div class="left">
+            
+            <div id="game-board"></div>
+            <p id="moves-left">Moves left: -</p>
+
+        </div>
+        
+
+
+        <div class="right">
+
+            <label class="neon-label">
+                <input type="radio" name="algorithm" value="bfs" checked>
+                <span>BFS</span>
+            </label>
+            
+            <label class="neon-label">
+                <input type="radio" name="algorithm" value="bestfs-hamming">
+                <span>Best-First Search (Hamming)</span>
+            </label>
+            
+            <label class="neon-label">
+                <input type="radio" name="algorithm" value="bestfs-manhattan">
+                <span>Best-First Search (Manhattan)</span>
+            </label>
+            
+            <label class="neon-label">
+                <input type="radio" name="algorithm" value="astar-hamming">
+                <span>A* (Hamming)</span>
+            </label>
+            
+            <label class="neon-label">
+                <input type="radio" name="algorithm" value="astar-manhattan">
+                <span>A* (Manhattan)</span>
+            </label>
+            
+
+            <div class="buttons">
+                <a class="neon-button neon-button__1" id="start-game">Start Game</a>
+                <a class="neon-button neon-button__1" id="shuffle-btn">Shuffle</a>
+                <a class="neon-button neon-button__1" id="stop">Stop</a>
+            </div>
+
+           
+        </div>
+        <div id="winModal" class="modal">
+            <div class="modal-content">
+                <p>Congratulations! You've solved the puzzle!</p>
+                <button id="closeModal">OK</button>
+            </div>
+        </div>
+    </div>
+  
+    <script src="script.js"></script>
+    
+</body>
+
+
+</html>
