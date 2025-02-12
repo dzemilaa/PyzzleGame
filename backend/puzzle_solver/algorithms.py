@@ -1,5 +1,6 @@
 from collections import deque
 import heapq
+import time
 from django.http import JsonResponse
 
 # Heuristics
@@ -26,30 +27,34 @@ class Algorithm:
     def get_steps(self):
         raise NotImplementedError("Ova funkcija mora biti implementirana u podklasi.")
 
+
+        
 class BFS(Algorithm):
-    def __init__(self, initial_state, goal_state):
-        super().__init__(initial_state, goal_state)
+    def get_steps(self, initial_state: tuple[int, ...], goal_state: tuple[int, ...]):
+        queue = deque([(initial_state, [])])
+        self.start_time = time.time()
+        visited = {initial_state}  # Add the initial state as a tuple of tuples
+        nodes_explored = 0
 
-    def get_steps(self):
-        visited = set()
-        queue = deque([(self.initial_state, [])])  # (trenutno stanje, putanja)
+        try:
+            while queue:
+                self.check_timeout()
 
-        visited.add(tuple(self.initial_state))  # Dodaj početno stanje odmah
+                state, path = queue.popleft()
+                nodes_explored += 1
 
-        while queue:
-            state, path = queue.popleft()
-            
-            if state == self.goal_state:
-                return path
+                if state == goal_state:
+                    return (path, nodes_explored)
 
-            # Generiši susedna stanja
-            for next_state, move in self.get_neighbors(state):
-                next_tuple = tuple(next_state)
-                if next_tuple not in visited:
-                    visited.add(next_tuple)  # Dodaj u posećene odmah da sprečiš duplikate
-                    queue.append((next_state, path + [move]))
+                for new_state, action in self.possible_paths(state):
+                    if new_state not in visited:  # Check if the state has already been visited
+                        queue.append((new_state, path + [action]))
+                        visited.add(new_state)  # Add the new state to the visited set
+        except TimeoutError:
+            print(f"BFSA timed out after {self.time_limit} seconds. Explored {nodes_explored} nodes.")
+            return ([], nodes_explored)
 
-        return None 
+        return ([], nodes_explored)
 
     def get_neighbors(self, state):
         # Define how tiles can move and return the valid neighbors and moves
