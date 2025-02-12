@@ -26,39 +26,42 @@ class Algorithm:
     def get_steps(self):
         raise NotImplementedError("Ova funkcija mora biti implementirana u podklasi.")
 
+
 class BFS(Algorithm):
     def __init__(self, initial_state, goal_state):
         super().__init__(initial_state, goal_state)
 
     def get_steps(self):
-        visited = set()
-        queue = deque([(self.initial_state, [])])  # (trenutno stanje, putanja)
+        visited = set()  # Set to keep track of visited states
+        queue = deque([(self.initial_state, [])])  # FIFO queue to explore states
 
-        visited.add(tuple(self.initial_state))  # Dodaj početno stanje odmah
+        visited.add(tuple(self.initial_state))  # Mark initial state as visited
 
         while queue:
-            state, path = queue.popleft()
-            
-            if state == self.goal_state:
+            state, path = queue.popleft()  # Get the next state and its associated path
+
+            if state == self.goal_state:  # If the goal state is found, return the path
                 return path
 
-            # Generiši susedna stanja
+            # Generate neighbors (valid moves)
             for next_state, move in self.get_neighbors(state):
                 next_tuple = tuple(next_state)
-                if next_tuple not in visited:
-                    visited.add(next_tuple)  # Dodaj u posećene odmah da sprečiš duplikate
-                    queue.append((next_state, path + [move]))
+                if next_tuple not in visited:  # If state hasn't been visited
+                    visited.add(next_tuple)  # Mark as visited
+                    queue.append((next_state, path + [move]))  # Add new state to the queue
 
-        return None 
+        return None  # Return None if no solution is found
 
     def get_neighbors(self, state):
-        # Define how tiles can move and return the valid neighbors and moves
+        # Define possible moves (left, right, up, down)
         neighbors = []
-        empty_index = state.index(0)  # Use 0 instead of None
-        moves = [-1, 1, -3, 3]  # Left, right, up, down
+        empty_index = state.index(0)  # Find the empty tile (represented by 0)
+        moves = [-1, 1, -3, 3]  # Left, Right, Up, Down
+
         for move in moves:
             new_index = empty_index + move
-            if 0 <= new_index < len(state):
+
+            if 0 <= new_index < len(state):  # Check if the new index is within bounds
                 if move == -1 and empty_index % 3 == 0:
                     continue  # Can't move left from the left edge
                 if move == 1 and new_index % 3 == 0:
@@ -66,8 +69,10 @@ class BFS(Algorithm):
 
                 new_state = state[:]
                 new_state[empty_index], new_state[new_index] = new_state[new_index], new_state[empty_index]
-                neighbors.append((new_state, new_index))
+                neighbors.append((new_state, move))  # Append new state and move to the list
+
         return neighbors
+
 
 class BestFS(Algorithm):
     def __init__(self, initial_state, goal_state, heuristic):
