@@ -103,7 +103,7 @@ function solvePuzzle(algorithm, heuristic = "") {
 
     const stateStr = board.map(x => (x === 0 ? "0" : x)).join(",");
 
-    fetch(`http://127.0.0.1:8000/puzzle/solve/?state=${stateStr}&algorithm=${algorithm}&heuristic=${heuristic}`)
+    fetch(`https://puzzlebackend-on82.onrender.com/puzzle/solve/?state=${stateStr}&algorithm=${algorithm}&heuristic=${heuristic}`)
         .then(response => response.json())
         .then(data => {
             if (data.solution) {
